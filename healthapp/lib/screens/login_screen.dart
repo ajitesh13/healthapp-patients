@@ -12,9 +12,10 @@ const List<AssetImage> login_icons = [
 ];
 
 class LoginPage extends StatefulWidget {
+  LoginPage({Key key, this.title}) : super(key: key);
+  static const id = "login";
+  final String title;
   @override
-  static const id = "login_page";
-
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -53,52 +54,52 @@ class _LoginPageState extends State<LoginPage> {
             ]),
             Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image(
-                      image: AssetImage('assets/icons/stethoscope.png'),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 6),
-                    ),
-                    Text(
-                      'Dr. Amit Goel',
-                      style: GoogleFonts.varelaRound(
-                          textStyle: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 29.0,
-                            fontWeight: FontWeight.w700,
-                          )),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 6),
-                    ),
-                    Text(
-                      'Endocrinologist in Hyderabad',
-                      style: GoogleFonts.varelaRound(
-                          textStyle: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                          )),
-                    ),
-                    Divider(
-                      thickness: 1.5,
-                      indent: 90.0,
-                      endIndent: 90.0,
-                      color: Colors.blue[700],
-                    ),
-                    Text(
-                      'Comprehensive Diabetes \n       & Endo care Clinic',
-                      style: GoogleFonts.varelaRound(
-                          textStyle: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                          )),
-                    ),
-                  ],
-                )),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(
+                  image: AssetImage('assets/icons/stethoscope.png'),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 6),
+                ),
+                Text(
+                  'Dr. Amit Goel',
+                  style: GoogleFonts.varelaRound(
+                      textStyle: TextStyle(
+                    color: Colors.blue[900],
+                    fontSize: 29.0,
+                    fontWeight: FontWeight.w700,
+                  )),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 6),
+                ),
+                Text(
+                  'Endocrinologist in Hyderabad',
+                  style: GoogleFonts.varelaRound(
+                      textStyle: TextStyle(
+                    color: Colors.blue[900],
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                  )),
+                ),
+                Divider(
+                  thickness: 1.5,
+                  indent: 90.0,
+                  endIndent: 90.0,
+                  color: Colors.blue[700],
+                ),
+                Text(
+                  'Comprehensive Diabetes \n       & Endo care Clinic',
+                  style: GoogleFonts.varelaRound(
+                      textStyle: TextStyle(
+                    color: Colors.blue[900],
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                  )),
+                ),
+              ],
+            )),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -131,11 +132,9 @@ class _LoginPageState extends State<LoginPage> {
     return RaisedButton(
       splashColor: Colors.grey,
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context){
-            return MobileLoginPage();
-          }
-        ));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return MobileLoginPage();
+        }));
         //TODO: Implement Mobile Phone Login
         print('Implement Mobile Phone Login');
       },
@@ -164,15 +163,16 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.grey,
       onPressed: () {
         if (text == login_types[0]) {
-          signInWithGoogle().whenComplete(() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return MobileLoginPage();
-                },
-              ),
-            );
-          });
+          // signInWithGoogle().whenComplete(() {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) {
+          //         return MobileLoginPage();
+          //       },
+          //     ),
+          //   );
+          // });
+          handleSignIn(context);
         } else {
           // TODO: Facebook Login!
           print('Implement Facebook Login');

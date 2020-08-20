@@ -6,6 +6,7 @@ import 'edit_profile.dart';
 import 'login_screen.dart';
 import "package:provider/provider.dart";
 import 'package:healthapp/stores/login_store.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key key}) : super(key: key);
@@ -17,34 +18,51 @@ class DrawerWidget extends StatefulWidget {
 String type;
 
 class _DrawerWidgetState extends State<DrawerWidget> {
+   SharedPreferences prefs;
+
+  String name;
+  String email;
+  String photo;
+  void readLocal() async {
+    prefs = await SharedPreferences.getInstance();
+
+    name = prefs.getString('name') ?? '';
+    email = prefs.getString('email') ?? '';
+    photo = prefs.getString('photoUrl') ?? '';
+
+    // Force refresh input
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    readLocal();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    String name = f_name, email = f_email, imageUrl = f_imageUrl;
-    if (type == 'Google') {
-      name = g_name;
-      email = g_email;
-      imageUrl = g_imageUrl;
-    }
-    if (email != null) email = email.split("@")[0];
+    
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       return Drawer(
         child: Container(
           color: Colors.black87,
+          padding: EdgeInsets.all(10.0),
           child: ListView(
+            
             children: [
               //TODO :Make this dynamic later!
               Container(
                 color: Colors.blue[700],
                 padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: Row(
+                child: Column(
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: CircleAvatar(
                         child: ClipOval(
                           child: Image.network(
-                            (imageUrl != null)
-                                ? imageUrl
+                            (photo != null)
+                                ? photo
                                 : 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
                           ),
                         ),
@@ -71,7 +89,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           child: Center(
                             child: Text(
                               (email != null)
-                                  ? '$email \n@gmail.com'
+                                  ? '$email'
                                   : 'katewilliams01 \n @gmail.com',
                               style: TextStyle(
                                 fontSize: 15.0,
