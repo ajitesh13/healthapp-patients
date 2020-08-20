@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:healthapp/screens/drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -12,6 +13,7 @@ String g_imageUrl;
 
 
 Future<String> signInWithGoogle() async {
+  SharedPreferences prefs;
   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
   final GoogleSignInAuthentication googleSignInAuthentication =
   await googleSignInAccount.authentication;
@@ -20,6 +22,7 @@ Future<String> signInWithGoogle() async {
     accessToken: googleSignInAuthentication.accessToken,
     idToken: googleSignInAuthentication.idToken,
   );
+  prefs = await SharedPreferences.getInstance();
 
 //  print(credential);
   final AuthResult authResult = await _auth.signInWithCredential(credential);

@@ -32,7 +32,6 @@ dependencies:
   google_sign_in: ^4.4.4
   agora_rtc_engine: ^1.0.13
   permission_handler: ^5.0.1+1
-  expandable: ^4.1.4
   google_fonts: ^1.1.0
   flutter_facebook_login: ^1.1.1
   numeric_keyboard: ^1.0.0
@@ -42,6 +41,18 @@ dependencies:
   provider: ^4.0.4
   url_launcher: ^5.5.0
   font_awesome_flutter: ^8.8.1
+  cloud_firestore: ^0.13.6
+  firebase_storage:
+  fluttertoast:
+  shared_preferences:
+  image_picker:
+  cached_network_image:
+  intl:
+  firebase_messaging: 
+  flutter_local_notifications: 
+  photo_view: 
+  flutter_svg: ^0.18.0
+  flutter_phone_direct_caller: ^1.0.1  
 
 dev_dependencies:
   flutter_test:

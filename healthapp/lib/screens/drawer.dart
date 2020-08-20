@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/authentication/facebook_login.dart';
-import 'profile.dart';
+import 'edit_profile.dart';
 import 'login_screen.dart';
 import "package:provider/provider.dart";
 import 'package:healthapp/stores/login_store.dart';

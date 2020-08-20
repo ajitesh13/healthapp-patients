@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/screens/login_screen.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/screens/user_details.dart';
-import 'package:healthapp/screens/profile.dart';
+import 'package:healthapp/screens/edit_profile.dart';
 import 'package:provider/provider.dart';
 import 'package:healthapp/screens/splash_page.dart';
 import 'package:healthapp/stores/login_store.dart';
