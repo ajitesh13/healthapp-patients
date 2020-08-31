@@ -85,20 +85,16 @@ class AppointmentDetails extends StatefulWidget {
 
   _AppointmentDetailsState createState() => _AppointmentDetailsState();
 }
+
 String type;
 String gender, dob, blood, marital, address, name, email;
 String height, weight, photo;
-
-
-
+ String id;
 SharedPreferences prefs;
-
-
-  
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
   Razorpay razorpay;
-void readLocal() async {
+  void readLocal() async {
     prefs = await SharedPreferences.getInstance();
     name = prefs.getString('name') ?? globals.user.name;
     email = prefs.getString('email') ?? globals.user.email;
@@ -116,7 +112,6 @@ void readLocal() async {
     // Force refresh input
     setState(() {});
   }
-
 
   @override
   void initState() {
@@ -136,7 +131,8 @@ void readLocal() async {
     super.dispose();
     razorpay.clear();
   }
- Map<String, String> notes = new Map();
+
+  Map<String, String> notes = new Map();
   void openCheckout() {
     String date = selectedDate.toString();
     date = date.substring(0, 10);
@@ -158,34 +154,31 @@ void readLocal() async {
 
       // 'timeout': 60, // in seconds
 //TODO:send these details
-     "notes": {
-       //  "Age":"20",
-        "Name":name,
-       "Gender":gender,
-       //TODO: add a field why is he visiting when he is booking the payment
-       "Reason to visit":"Cough and Cold",
-       //TODO: add this variable
-       
-       "First time/Follow up":"First Time",
+      "notes": {
+        //  "Age":"20",
+        "Name": name,
+        "Gender": gender,
+        //TODO: add a field why is he visiting when he is booking the payment
+        "Reason to visit": "Cough and Cold",
+        //TODO: add this variable
 
-       "Date of Birth" :dob,
-       "Blood Group":blood,
-       "Height":height,
-       "Weight":weight,
-       "Marital Status":marital,
-       "Home Address":address,
-       
+        "First time/Follow up": "First Time",
 
-
-     },
-     //"theme": "#FFFFFF",
-      "description":"$visitType, $date, $visitDuration($visitTime)",
-        "image": "https://dramitendo.com/wp-content/uploads/2020/07/Dr-Amit-Goel.png",
+        "Date of Birth": dob,
+        "Blood Group": blood,
+        "Height": height,
+        "Weight": weight,
+        "Marital Status": marital,
+        "Home Address": address,
+      },
+      //"theme": "#FFFFFF",
+      "description": "$visitType, $date, $visitDuration($visitTime)",
+      "image":
+          "https://dramitendo.com/wp-content/uploads/2020/07/Dr-Amit-Goel.png",
       "prefill": {
         "contact": "",
-       "email": "",
-      
-       },
+        "email": "",
+      },
       "currency": "INR",
       "payment_capture": 1,
       "external": {
@@ -219,6 +212,7 @@ void readLocal() async {
     razorpay.clear();
   }
 
+ 
   void handlerErrorFailure(PaymentFailureResponse response) {
     print("Payment error");
     Toast.show("Payment error", context);
@@ -373,8 +367,7 @@ void readLocal() async {
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () async {
                             await globals.uploadBookingDetails(
-
-                              email: globals.user.email,
+                              
                               doctorName: name,
                               years: expYears,
                               field: fields,
@@ -383,7 +376,11 @@ void readLocal() async {
                               visitTime: visitTime,
                               visitType: visitType,
                               visitDuration: visitDuration,
-                              
+                              email: globals.user.email,
+                              id: globals.user.id,
+                              photo: globals.user.photo,
+                              name: globals.user.name,
+
                               // paymentId: globals.user.paymentId,
                             );
                             print('done');

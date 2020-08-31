@@ -29,8 +29,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
   @override
   Widget build(BuildContext context) {
      print('all the bookings');
-    // globals
-    //     .getPatientBooking(); //{visitDuration: 9:00-9:15, doctorName: Dr Sonali Gupta, visitTime: Morning, cost: Rs 300, field: Gynecologist, paymentId: pay_FX3SE1hIqLnNTy, selectedDate: Timestamp(seconds=1597170600, nanoseconds=0), email: anjalisony32@gmail.com, years: 3Y Exp, visitType: Online}
+    globals 
+         .getPatientBooking(); 
+         //{visitDuration: 9:00-9:15, doctorName: Dr Sonali Gupta, visitTime: Morning, cost: Rs 300, field: Gynecologist, paymentId: pay_FX3SE1hIqLnNTy, selectedDate: Timestamp(seconds=1597170600, nanoseconds=0), email: anjalisony32@gmail.com, years: 3Y Exp, visitType: Online}
      print('patients booking');
       globals.getAllBookings();
 

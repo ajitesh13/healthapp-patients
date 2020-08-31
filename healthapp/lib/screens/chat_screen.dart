@@ -152,7 +152,7 @@ class ChatScreenState extends State<ChatScreen> {
             // List
             Container(
               child: StreamBuilder(
-                stream: Firestore.instance.collection('user').snapshots(),
+                stream: Firestore.instance.collection('booking_details').snapshots(),
                 builder: (context, snapshot) {
                   print(snapshot);
 
@@ -198,8 +198,8 @@ class ChatScreenState extends State<ChatScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => Chat(
-                          peerId: document.documentID,
-                          peerAvatar: document['photoUrl'],
+                          peerId: document['id'],
+                          peerAvatar: document['photo'],
                         )));
           },
           child: Ink(
@@ -207,7 +207,7 @@ class ChatScreenState extends State<ChatScreen> {
                 borderRadius: BorderRadius.circular(7), color: Colors.white),
             padding: EdgeInsets.symmetric(vertical: 5),
             child: ListTile(
-              leading: _imageIcon(document['photoUrl']),
+              leading: _imageIcon(document['photo']),
               title: _doctorName('${document['name']}'),
               subtitle: _ongoingOrCompletedSubtitle(
                 'Ongoing',
