@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/screens/appointments/appointments_page.dart';
+import 'package:healthapp/screens/appointments/user_desc.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/screens/book_appointments/doctor_details.dart';
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyApp> {
           AppointmentDetails.id: (context) => AppointmentDetails(),
           UserProfile.id: (context) => UserProfile(),
           UploadPhoto.id: (context) => UploadPhoto(),
+          UserDesc.id: (context) => UserDesc(),
         },
       ),
     );

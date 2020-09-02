@@ -175,7 +175,10 @@ class ChatScreenState extends State<ChatScreen> {
                           return ListView.builder(
                             padding: EdgeInsets.all(10.0),
                             itemBuilder: (context, index) => buildItem(
-                                context, snapshot.data.documents[index], index, snapshot.data.documents),
+                                context,
+                                snapshot.data.documents[index],
+                                index,
+                                snapshot.data.documents),
                             itemCount: snapshot.data.documents.length,
                           );
                         }
@@ -197,7 +200,8 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget buildItem(BuildContext context, DocumentSnapshot document, int index, documents) {
+  Widget buildItem(
+      BuildContext context, DocumentSnapshot document, int index, documents) {
     if (visitTime == 'Upcoming') {
       if (!document.data['selectedDate'].toDate().isBefore(DateTime.now())) {
         return buildInteriorItem(context, document, index, documents);
@@ -225,15 +229,18 @@ class ChatScreenState extends State<ChatScreen> {
     date = date.split(',')[0];
     String month = date.split(' ')[1].substring(0, 3);
 
-    bool ok=true;
-    for (int i = index-1; i >= 0; i--) {
+    bool ok = true;
+    for (int i = index - 1; i >= 0; i--) {
       Timestamp visitDate1 = documents[i].data['selectedDate'];
       String date1 =
-      dateTimeConverter(visitDate1.toDate().toString().split(' ')[0]);
+          dateTimeConverter(visitDate1.toDate().toString().split(' ')[0]);
       String year1 = (date1.split(',')[1].substring(1, 5));
       date1 = date1.split(',')[0];
       String month1 = date1.split(' ')[1].substring(0, 3);
-      if(month==month1 && year==year1) ok=false;
+      if (month == month1 && year == year1) {
+        ok = false;
+        break;
+      }
     }
 
     return InkWell(
@@ -244,12 +251,16 @@ class ChatScreenState extends State<ChatScreen> {
                 builder: (context) => Chat(
                       peerId: document['id'],
                       peerAvatar: document['photo'],
+                      peerName: document['name'],
+                      bookingInfo: document,
                     )));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          (ok==true)?_getText(month + " " + year, 15, Color(0xFF8F8F8F)):Container(),
+          (ok == true)
+              ? _getText(month + " " + year, 15, Color(0xFF8F8F8F))
+              : Container(),
           _appointmentsTab(document['photo'], document['name'], date, time),
         ],
       ),

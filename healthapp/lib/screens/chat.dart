@@ -7,6 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/screens/appointments/user_desc.dart';
+import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/widgets/full_photo.dart';
 import 'package:healthapp/widgets/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -35,11 +37,10 @@ Future<void> onJoin(BuildContext context) async {
     MaterialPageRoute(
       builder: (context) => CallPage(
         // if(globals.user.email=='dramitgoelhyd@gmail.com'){
- channelName: 'abcd',
- //TODO:  make channel name unique for two doctor and patient  
- //channelName: 
-       
-       
+        channelName: 'abcd',
+        //TODO:  make channel name unique for two doctor and patient
+        //channelName:
+
         role: ClientRole.Broadcaster,
       ),
     ),
@@ -55,8 +56,15 @@ class Chat extends StatelessWidget {
   static const id = "chat";
   final String peerId;
   final String peerAvatar;
+  final String peerName;
+  final DocumentSnapshot bookingInfo;
 
-  Chat({Key key, @required this.peerId, @required this.peerAvatar})
+  Chat(
+      {Key key,
+      @required this.peerId,
+      @required this.peerAvatar,
+      @required this.peerName,
+      @required this.bookingInfo})
       : super(key: key);
 
   Widget _ongoingOrCompletedSubtitle(String type) {
@@ -90,84 +98,98 @@ class Chat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(75),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: AppBar(
-            backgroundColor: Color(0xFFF8F8F8),
-            elevation: 0,
-            title: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: Color(0xFFF8F8F8),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: ListTile(
-                leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image(
-                      image: NetworkImage(peerAvatar),
-                      width: 40,
-                    )),
-                title: Text(
-                  'Dr. Amit',
-                  style: textStyle2,
-                ),
-                subtitle: _ongoingOrCompletedSubtitle('Ongoing'),
-              ),
-            ),
-            leading: GestureDetector(
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: AppBar(
+              backgroundColor: Color(0xFFF8F8F8),
+              elevation: 0,
+              title: InkWell(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserDesc(
+                                bookingInfo: bookingInfo,
+                              )));
                 },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.blue[700],
-                )),
-            actions: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                    color: Color(0xFFDFE9F7),
-                    borderRadius: BorderRadius.circular(7)),
-                child: GestureDetector(
-                  onTap: () {
-                    FlutterPhoneDirectCaller.callNumber(9100453919.toString());
-                  },
-                  child: Icon(
-                    Icons.call,
-                    size: 24,
-                    color: Color(0xFF007CC2),
+                splashColor: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: Color(0xFFF8F8F8),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: ListTile(
+                    leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image(
+                          image: NetworkImage(peerAvatar),
+                          width: 40,
+                        )),
+                    title: Text(
+                      peerName.split(' ')[0],
+                      style: textStyle2,
+                    ),
+                    subtitle: _ongoingOrCompletedSubtitle('Ongoing'),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 10, bottom: 10, right: 20),
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                    color: Color(0xFFDFE9F7),
-                    borderRadius: BorderRadius.circular(7)),
-                child: GestureDetector(
+              leading: GestureDetector(
                   onTap: () {
-                    onJoin(context);
+                    Navigator.pop(context);
                   },
                   child: Icon(
-                    Icons.videocam,
-                    size: 24,
-                    color: Color(0xFF007CC2),
+                    Icons.arrow_back_ios,
+                    color: Colors.blue[700],
+                  )),
+              actions: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFDFE9F7),
+                      borderRadius: BorderRadius.circular(7)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FlutterPhoneDirectCaller.callNumber(
+                          9100453919.toString());
+                    },
+                    child: Icon(
+                      Icons.call,
+                      size: 24,
+                      color: Color(0xFF007CC2),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10, right: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFDFE9F7),
+                      borderRadius: BorderRadius.circular(7)),
+                  child: GestureDetector(
+                    onTap: () {
+                      onJoin(context);
+                    },
+                    child: Icon(
+                      Icons.videocam,
+                      size: 24,
+                      color: Color(0xFF007CC2),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: ChatScreen(
-        peerId: peerId,
-        peerAvatar: peerAvatar,
+        body: ChatScreen(
+          peerId: peerId,
+          peerAvatar: peerAvatar,
+        ),
       ),
     );
   }
